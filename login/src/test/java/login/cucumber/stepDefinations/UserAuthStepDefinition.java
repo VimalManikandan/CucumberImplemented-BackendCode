@@ -27,6 +27,7 @@ public class UserAuthStepDefinition extends AbstractSpringTest {
 	HttpEntity<?> request =null;
 	ResponseEntity<?> response =null;
 	HttpEntity<String> entity ;
+	int userId=0;
 	
 	UriComponentsBuilder requestUrl=null;
 
@@ -59,11 +60,12 @@ public class UserAuthStepDefinition extends AbstractSpringTest {
 	@When("New User is added")
 	public void new_User_is_added(){				
 		User u1=new User();
-		u1.setUsername("Userrrr");
+		u1.setUsername("NewUser1");
 		u1.setUserpwd("123Password");
 		u1.setUsertype("USER");
 		HttpEntity<User> request = new HttpEntity<>(u1, headers);
 		response=this.addUserRestCall(this.URL+"/userApi/create", request,User.class);
+		userId=((User)response.getBody()).getUserid();
 		logger.info("New User is added"+response);
 	}
 	
@@ -75,13 +77,13 @@ public class UserAuthStepDefinition extends AbstractSpringTest {
 	@Then("User is fetched")
 	public void user_is_fetched(){
 		HttpEntity<User> request = new HttpEntity<>(headers);
-		response= this.getUserRestCall(this.URL+"/userApi/get/18", HttpMethod.GET,request,User.class);
+		response= this.getUserRestCall(this.URL+"/userApi/get/22", HttpMethod.GET,request,User.class);
 		logger.info("User is fetched: "+response);
 		
 	}	
 	@When("New User is updated")
 	public void new_User_is_update(){
-		User u1=new User(18, "UserChanaged", "pwdchanges", "ADMIN", "XYZ");
+		User u1=new User(22, "UserChanaged", "pwdchanges", "ADMIN", "XYZ");
 		HttpEntity<User> request = new HttpEntity<>(u1, headers);
 		response=this.updateUserRestCall(this.URL+"/userApi/update", request,User.class);
 		logger.info("New User is update :"+response);
@@ -90,7 +92,7 @@ public class UserAuthStepDefinition extends AbstractSpringTest {
 	@When("User is deleted")
 	public void user_is_deleted(){
 		HttpEntity<User> request = new HttpEntity<>(headers);
-		response= this.deleteUserRestCall(this.URL+"/userApi/delete/18", HttpMethod.DELETE,request,GenericResponce.class);
+		response= this.deleteUserRestCall(this.URL+"/userApi/delete/22", HttpMethod.DELETE,request,GenericResponce.class);
 		logger.info("User is deleted :"+response);
 	}
 	

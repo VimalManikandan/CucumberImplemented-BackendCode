@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import login.login.model.GenericResponce;
 import login.login.model.Loan;
+import login.login.model.MyUserDetails;
 import login.login.model.User;
 import login.login.service.UserService;
 
@@ -93,15 +94,19 @@ public class UserRestControllerTest {
 	
 	@Test
 	public void testLoanObject() throws Exception {
+		User user1=new User(1, "Vimal", "test", "Admin", "abc");
 		Loan l1= new Loan(1, "Vimal", "V", "Palakkad", 125000, "Personal", 60);
+		l1.setUser(user1);
 		Loan l2= new Loan();
 		l2.setLoanno(1);
 		l2.setFname("Vimal");
-		l2.setFname("V");
+		l2.setLname("V");
 		l2.setPaddress("Palakkad");
 		l2.setLoanAmount(125000);
 		l2.setLoantype("Personal");
 		l2.setLoanterm(60);
+		l2.setUser(user1);
+		
 
 		assertEquals(l1, l2);
 		assertNotNull(l1.getLoanno());
@@ -111,10 +116,23 @@ public class UserRestControllerTest {
 		assertNotNull(l1.getLoanAmount());
 		assertNotNull(l1.getLoantype());
 		assertNotNull(l1.getLoanterm());
+		assertNotNull(l1.getUser());
 
-		assertTrue( l1.hashCode()==l2.hashCode() );
+		assertTrue(l1.hashCode()==l2.hashCode());
+		assertEquals(l1.toString(),l2.toString());
+		assertTrue( l1.equals(l2));
 	}
-
+	@Test
+	public void testMyUserDetailsobject(){
+		User user1=new User(1, "Vimal", "test", "Admin", "abc");
+		MyUserDetails details=new MyUserDetails(user1);
+		User user2=new User();
+		MyUserDetails userDetails=new MyUserDetails();
+		userDetails.setUser(user2);		
+		assertNotEquals(details.getUser(), userDetails.getUser());
+	}
+	
+	
 	@Test
 	public void testGenericObject() throws Exception {
 		GenericResponce g1=new GenericResponce(HttpStatus.OK.value(),"Success");

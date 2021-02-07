@@ -42,12 +42,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);		
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-	/*	http.csrf().disable().authorizeRequests()
-		.antMatchers("/userApi/create")
-		.permitAll()
-		.anyRequest().authenticated()
-		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);	
-		*/
 	}
 
 	@Bean

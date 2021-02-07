@@ -179,6 +179,7 @@ public class LoanControllerTest {
 	public void testGenericObject() throws Exception {
 		GenericResponce g1=new GenericResponce(HttpStatus.OK.value(),"Success");
 		GenericResponce g2=new GenericResponce();
+		
 		g2.setStatus(g1.getStatus());
 		g2.setMessage(g1.getMessage());
 
@@ -196,6 +197,7 @@ public class LoanControllerTest {
 		ud2.setUsername(ud1.getUsername());
 		ud2.setUserpwd(ud1.getUserpwd());
 		ud2.setUsertype(ud1.getUsertype());
+		ud2.setJwtToken("ABCD");
 
 
 		assertNotNull(ud1);
